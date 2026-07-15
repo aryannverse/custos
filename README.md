@@ -1,4 +1,4 @@
-# Custos: AI-Powered SQL Generation with Safety First 🛡️
+<img width="1979" height="604" alt="Frame 10" src="https://github.com/user-attachments/assets/b9dc559c-820c-439d-ad97-9c88813a6a71" />
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.35-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
