@@ -1,0 +1,39 @@
+# ============================================================
+# Custos — Model Configuration
+# ============================================================
+# This is the SINGLE source of truth for all Groq model IDs.
+# No model string is hardcoded anywhere else in the codebase.
+#
+# Verified against Groq's live model lineup: 2026-07-15
+# Re-verify at each build phase: GET https://api.groq.com/v1/models
+# ============================================================
+
+[models]
+# Primary generation model — used for:
+#   - Main SQL generation (Phase 2)
+#   - Prompt-heavy tasks requiring strong instruction following
+primary = "openai/gpt-oss-120b"
+
+# Secondary / critic model — used for:
+#   - Back-translation check (Phase 3): "what question does this SQL answer?"
+#   - Multi-query agreement: independent second SQL strategy generation
+#   - Any lightweight check where a different architecture improves diversity
+#
+# Deliberately a DIFFERENT architecture family from primary.
+# qwen/qwen3.6-27b chosen over openai/gpt-oss-20b specifically because
+# different training lineage means less-correlated failure modes —
+# which is the entire point of a second-opinion check.
+# (Replaces deprecated llama-3.3-70b-versatile from SRS; confirmed 2026-07-15)
+secondary = "qwen/qwen3.6-27b"
+
+[rate_limits]
+# Conservative defaults for free-tier Groq.
+# Back these off further if CI runs hit 429s during Phase 5.
+requests_per_minute = 25
+max_retries = 3
+base_backoff_seconds = 1.0
+max_backoff_seconds = 30.0
+
+[schema]
+relevance_top_k = 5
+embedding_model = "all-MiniLM-L6-v2"

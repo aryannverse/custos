@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Secrets — NEVER commit these
+.env
+*.env.local
+
+# Database files
+data/custos.duckdb
+data/custos.duckdb.wal
+data/*.db
+data/*.duckdb
+
+# Vector index
+chroma_db/
+faiss_index/
+
+# Logs
+*.log
+logs/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Docker
+*.pid
+
+# Custom Artifacts
+AGENTS.md
+SKILLS/
+config/plugins/

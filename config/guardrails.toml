@@ -1,0 +1,74 @@
+# ============================================================
+# Custos — Guardrail Rule Engine Configuration
+# ============================================================
+# All guardrail parameters are externalized here so they can
+# be tuned without a code change or redeploy (NFR-Maintainability).
+#
+# Populated in Phase 2. Structure defined here in Phase 0 so
+# the config loader doesn't need to change between phases.
+# ============================================================
+
+[limits]
+# Maximum rows returned by any query. Injected via LIMIT clause
+# if the generated SQL doesn't include one, or if the existing
+# LIMIT exceeds this value.
+default_row_limit = 1000
+max_row_limit = 10000
+
+# Maximum nesting depth for subqueries. Queries exceeding this
+# are rejected before execution.
+max_subquery_depth = 3
+
+# EXPLAIN-based scan-size ceiling. Queries estimated to scan
+# more than this many rows are rejected. 0 = disabled.
+max_scan_rows_estimate = 1_000_000
+
+[blocklist]
+# DDL statement types — rejected regardless of context.
+# Uses sqlglot AST node type names.
+ddl_node_types = [
+    "Create", "Drop", "Alter", "Truncate", "Rename",
+    "CreateTable", "CreateView", "CreateIndex",
+    "DropTable", "DropView", "DropIndex",
+    "AlterTable",
+]
+
+# DML statement types — rejected regardless of context.
+dml_node_types = [
+    "Insert", "Update", "Delete", "Merge",
+    "Replace", "Upsert",
+]
+
+# Transaction control — rejected (prevents BEGIN/COMMIT tricks).
+tcl_node_types = [
+    "Transaction", "Commit", "Rollback", "Savepoint",
+]
+
+# Dangerous function names (case-insensitive) blocked at AST level.
+# These are functions that can exfiltrate data or cause side effects
+# even in an otherwise SELECT-shaped query.
+blocked_functions = [
+    "load_extension",    # DuckDB: loads native code
+    "read_csv",          # DuckDB: reads arbitrary filesystem paths
+    "read_json",         # DuckDB: reads arbitrary filesystem paths
+    "read_parquet",      # DuckDB: reads arbitrary filesystem paths
+    "copy",              # DuckDB: writes to filesystem
+    "export_database",   # DuckDB: dumps entire database
+    "pg_read_file",      # PostgreSQL: reads server files
+    "pg_sleep",          # PostgreSQL: DoS vector
+]
+
+[adversarial]
+# Unicode normalization applied before parsing to catch
+# obfuscation attacks (e.g., fullwidth characters, homoglyphs).
+# Phase 2 implements NFKC normalization + ASCII-fold before
+# the SQL is handed to the AST parser.
+normalize_unicode = true
+
+# Strip SQL comments before keyword scanning.
+# Catches comment-injection attacks like: SELECT 1 /* DROP TABLE */
+strip_comments_before_scan = true
+
+# Reject multi-statement inputs (semicolons separating statements).
+# Catches: SELECT 1; DROP TABLE users
+reject_multi_statement = true

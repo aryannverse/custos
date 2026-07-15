@@ -1,0 +1,60 @@
+# ============================================================
+# Custos — Confidence Score Weight Configuration
+# ============================================================
+# All confidence signal weights are externalized here so they
+# can be re-tuned against the golden set in Phase 5 without
+# a code change (NFR-Maintainability, SRS Section 6.4).
+#
+# Populated/tuned in Phase 3. Structure defined here in Phase 0.
+#
+# The final confidence score is a weighted combination of
+# independent signals, not a single model-reported number.
+# Weights here are defaults; Phase 5 calibrates them against
+# the golden query dataset.
+# ============================================================
+
+[weights]
+# Syntax validity: hard gate — invalid SQL never reaches the user.
+# This signal is binary (0 or 1), not weighted.
+# Listed here for documentation; not used in the weighted sum.
+# syntax_valid = "hard_gate"
+
+# Back-translation alignment: how closely the model's answer to
+# "what question does this SQL answer?" matches the original question.
+# Measured via cosine similarity of embeddings.
+# High weight because this is the primary hallucination signal.
+back_translation_alignment = 0.35
+
+# Result sanity checks: fraction of sanity checks that passed
+# (plausible ranges, expected count magnitudes, date bounds,
+# NULL-density on join outputs).
+sanity_check_pass_rate = 0.25
+
+# Multi-query agreement: whether a second independently generated
+# SQL approach produced the same result. Only applies to complex
+# questions; for simple questions, this signal defaults to 0.5 (neutral).
+multi_query_agreement = 0.25
+
+# Schema coverage plausibility: whether the tables and columns
+# actually used in the SQL match what would be expected for this
+# category of question, based on the schema relevance scores.
+schema_coverage_plausibility = 0.15
+
+[thresholds]
+# Back-translation: cosine similarity below this triggers a
+# hallucination warning. Calibrate in Phase 3.
+back_translation_min_similarity = 0.70
+
+# Overall confidence score below this level shows a prominent
+# warning in the UI alongside the result.
+confidence_warning_threshold = 50
+
+# Overall confidence score below this level suppresses the result
+# entirely and returns a clarification request instead.
+confidence_block_threshold = 20
+
+[calibration]
+# Whether to use empirically calibrated weights from Phase 5 tuning.
+# Set to true after running: scripts/calibrate_weights.py
+use_calibrated_weights = false
+calibrated_weights_path = "config/calibrated_weights.json"
