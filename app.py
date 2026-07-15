@@ -7,7 +7,7 @@ import os
 import sys
 
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "src")))
 from custos.pipeline import TextToSQLPipeline
 
 st.set_page_config(
