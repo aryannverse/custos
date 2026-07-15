@@ -1,4 +1,4 @@
-utf-8import chromadb
+import chromadb
 from sentence_transformers import SentenceTransformer
 from custos.schema.models import DatabaseSchema
 import structlog

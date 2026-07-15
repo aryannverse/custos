@@ -1,4 +1,4 @@
-utf-8"""
+"""
 custos.core.logging — Structured JSON logging setup.
 
 Every log entry produced anywhere in Custos has a consistent schema:

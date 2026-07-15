@@ -1,4 +1,4 @@
-utf-8import structlog
+import structlog
 from custos.schema.models import DatabaseSchema, TableDef, ColumnDef
 from custos.schema.embeddings import SchemaEmbedder
 from custos.core.config import settings

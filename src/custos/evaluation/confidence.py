@@ -1,4 +1,4 @@
-utf-8from pydantic import BaseModel
+from pydantic import BaseModel
 
 from custos.core.config import settings
 

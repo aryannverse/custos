@@ -1,4 +1,4 @@
-utf-8import structlog
+import structlog
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.pool import NullPool
 from custos.schema.models import DatabaseSchema, TableDef, ColumnDef, ForeignKeyDef

@@ -1,4 +1,4 @@
-utf-8import instructor
+import instructor
 from groq import Groq
 from sentence_transformers import SentenceTransformer, util
 from pydantic import BaseModel, Field

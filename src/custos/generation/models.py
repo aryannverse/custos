@@ -1,4 +1,4 @@
-utf-8from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field
 
 class SQLGenerationResult(BaseModel):
     sql_query: str = Field(description="The valid SQL query answering the user's question. MUST NOT include any markdown formatting like ```sql...```, just the raw SQL.")

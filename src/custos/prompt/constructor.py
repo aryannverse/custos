@@ -1,4 +1,4 @@
-utf-8import structlog
+import structlog
 from custos.schema.models import DatabaseSchema
 
 logger = structlog.get_logger(__name__)

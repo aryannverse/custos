@@ -1,4 +1,4 @@
-utf-8import sqlglot
+import sqlglot
 from sqlglot import expressions as exp
 from typing import Optional
 

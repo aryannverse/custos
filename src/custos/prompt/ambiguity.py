@@ -1,4 +1,4 @@
-utf-8import structlog
+import structlog
 from pydantic import BaseModel, Field
 import instructor
 from groq import Groq

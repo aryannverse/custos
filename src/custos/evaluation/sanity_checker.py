@@ -1,4 +1,4 @@
-utf-8import json
+import json
 import instructor
 from groq import Groq
 from pydantic import BaseModel, Field

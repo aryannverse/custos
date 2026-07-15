@@ -1,4 +1,4 @@
-utf-8import structlog
+import structlog
 import sqlglot
 import unicodedata
 from sqlglot import parse_one

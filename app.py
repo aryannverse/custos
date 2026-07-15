@@ -1,4 +1,4 @@
-utf-8import streamlit as st
+import streamlit as st
 import pandas as pd
 import duckdb
 import tempfile

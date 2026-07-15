@@ -1,4 +1,4 @@
-utf-8import time
+import time
 import structlog
 import duckdb
 from pydantic import BaseModel, Field

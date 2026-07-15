@@ -1,4 +1,4 @@
-utf-8"""
+"""
 custos.core.config — Configuration loader.
 
 Loads settings from:
